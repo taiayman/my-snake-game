@@ -16,7 +16,7 @@ function CInterface(iScore){
     var _aText = new Array();
     var _oTimerLevelNumStroke;
     var _oTimerLevelNum;
-    var _oTimerText; // The general timer text object
+    var _oTimerText;
 
     var _oMathOperationText;
 
@@ -32,10 +32,6 @@ function CInterface(iScore){
     var _oButMovementRight;
     var _oButMovementDown;
     var _oButMovementLeft;
-    var _oButMovementUp1;
-    var _oButMovementRight1;
-    var _oButMovementDown1;
-    var _oButMovementLeft1;
         
     var _pStartPosExit;
     var _pStartPosAudio;
@@ -43,10 +39,6 @@ function CInterface(iScore){
     var _pStartPosButtonRight;
     var _pStartPosButtonDown;
     var _pStartPosButtonLeft;
-    var _pStartPosButtonUp1;
-    var _pStartPosButtonRight1;
-    var _pStartPosButtonDown1;
-    var _pStartPosButtonLeft1;
     var _pStartPosFullscreen;
     
     this._init = function(iScore){                
@@ -181,47 +173,34 @@ function CInterface(iScore){
         this.setButVisible(true);
         
         if(s_bMobile && !isTablet()){
+            var buttonSize = 100;
+            var margin = 20;
+            var bottomY = CANVAS_HEIGHT - margin - buttonSize;
+            var middleY = bottomY - buttonSize - margin;
+            var rightX = CANVAS_WIDTH - margin - buttonSize;
+            var middleX = rightX - buttonSize - margin;
+            var leftX = middleX - buttonSize - margin;
+
             var oSprite = s_oSpriteLibrary.getSprite('left_mobile');
-            _pStartPosButtonLeft = {x: CANVAS_WIDTH - 335, y: oSprite.height + 880};
+            _pStartPosButtonLeft = {x: leftX, y: bottomY};
             _oButMovementLeft = new CGfxButton(_pStartPosButtonLeft.x, _pStartPosButtonLeft.y, oSprite, s_oStage);
             _oButMovementLeft.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'left');
 
-            var oSprite = s_oSpriteLibrary.getSprite('up_mobile');
-            _pStartPosButtonUp = {x: CANVAS_WIDTH - 200, y: oSprite.height + 745};
+            oSprite = s_oSpriteLibrary.getSprite('up_mobile');
+            _pStartPosButtonUp = {x: middleX, y: middleY};
             _oButMovementUp = new CGfxButton(_pStartPosButtonUp.x, _pStartPosButtonUp.y, oSprite, s_oStage);
             _oButMovementUp.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'up');
 
-            var oSprite = s_oSpriteLibrary.getSprite('right_mobile');
-            _pStartPosButtonRight = {x: CANVAS_WIDTH - 65, y: oSprite.height + 880};
+            oSprite = s_oSpriteLibrary.getSprite('right_mobile');
+            _pStartPosButtonRight = {x: rightX, y: bottomY};
             _oButMovementRight = new CGfxButton(_pStartPosButtonRight.x, _pStartPosButtonRight.y, oSprite, s_oStage);
             _oButMovementRight.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'right');
 
-            var oSprite = s_oSpriteLibrary.getSprite('down_mobile');
-            _pStartPosButtonDown = {x: CANVAS_WIDTH - 200, y: oSprite.height + 880};
+            oSprite = s_oSpriteLibrary.getSprite('down_mobile');
+            _pStartPosButtonDown = {x: middleX, y: bottomY};
             _oButMovementDown = new CGfxButton(_pStartPosButtonDown.x, _pStartPosButtonDown.y, oSprite, s_oStage);
             _oButMovementDown.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'down');
-
-            var oSprite = s_oSpriteLibrary.getSprite('left_mobile');
-            _pStartPosButtonLeft1 = {x: CANVAS_WIDTH - 1850, y: oSprite.height + 880};
-            _oButMovementLeft1 = new CGfxButton(_pStartPosButtonLeft1.x-1575, _pStartPosButtonLeft1.y, oSprite, s_oStage);
-            _oButMovementLeft1.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'left');
-
-            var oSprite = s_oSpriteLibrary.getSprite('up_mobile');
-            _pStartPosButtonUp1 = {x: CANVAS_WIDTH - 1715, y: oSprite.height + 745};
-            _oButMovementUp1 = new CGfxButton(_pStartPosButtonUp1.x, _pStartPosButtonUp1.y, oSprite, s_oStage);
-            _oButMovementUp1.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'up');
-
-            var oSprite = s_oSpriteLibrary.getSprite('right_mobile');
-            _pStartPosButtonRight1 = {x: CANVAS_WIDTH - 1580, y: oSprite.height + 880};
-            _oButMovementRight1 = new CGfxButton(_pStartPosButtonRight1.x, _pStartPosButtonRight1.y, oSprite, s_oStage);
-            _oButMovementRight1.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'right');
-
-            var oSprite = s_oSpriteLibrary.getSprite('down_mobile');
-            _pStartPosButtonDown1 = {x: CANVAS_WIDTH - 1715, y: oSprite.height + 880};
-            _oButMovementDown1 = new CGfxButton(_pStartPosButtonDown1.x, _pStartPosButtonDown1.y, oSprite, s_oStage);
-            _oButMovementDown1.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'down');
-            
-        }else{
+        } else {
             var oSprite = s_oSpriteLibrary.getSprite('left');
             _pStartPosButtonLeft = {x: CANVAS_WIDTH - 275, y: oSprite.height + 900};
             _oButMovementLeft = new CGfxButton(_pStartPosButtonLeft.x, _pStartPosButtonLeft.y, oSprite, s_oStage);
@@ -241,26 +220,6 @@ function CInterface(iScore){
             _pStartPosButtonDown = {x: CANVAS_WIDTH - 170, y: oSprite.height + 900};
             _oButMovementDown = new CGfxButton(_pStartPosButtonDown.x, _pStartPosButtonDown.y, oSprite, s_oStage);
             _oButMovementDown.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'down');
-
-            var oSprite = s_oSpriteLibrary.getSprite('left');
-            _pStartPosButtonLeft1 = {x: CANVAS_WIDTH - 1850, y: oSprite.height + 900};
-            _oButMovementLeft1 = new CGfxButton(_pStartPosButtonLeft1.x-1575, _pStartPosButtonLeft1.y, oSprite, s_oStage);
-            _oButMovementLeft1.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'left');
-
-            var oSprite = s_oSpriteLibrary.getSprite('up');
-            _pStartPosButtonUp1 = {x: CANVAS_WIDTH - 1745, y: oSprite.height + 795};
-            _oButMovementUp1 = new CGfxButton(_pStartPosButtonUp1.x, _pStartPosButtonUp1.y, oSprite, s_oStage);
-            _oButMovementUp1.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'up');
-
-            var oSprite = s_oSpriteLibrary.getSprite('right');
-            _pStartPosButtonRight1 = {x: CANVAS_WIDTH - 1640, y: oSprite.height + 900};
-            _oButMovementRight1 = new CGfxButton(_pStartPosButtonRight1.x, _pStartPosButtonRight1.y, oSprite, s_oStage);
-            _oButMovementRight1.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'right');
-
-            var oSprite = s_oSpriteLibrary.getSprite('down');
-            _pStartPosButtonDown1 = {x: CANVAS_WIDTH - 1745, y: oSprite.height + 900};
-            _oButMovementDown1 = new CGfxButton(_pStartPosButtonDown1.x, _pStartPosButtonDown1.y, oSprite, s_oStage);
-            _oButMovementDown1.addEventListenerWithParams(ON_MOUSE_DOWN, this._onDirectionPressed, this, 'down');
         }
         
         _oContainerGoal = new createjs.Container();
@@ -300,13 +259,11 @@ function CInterface(iScore){
 
         _oMathOperationText = new CTLText(s_oStage,
             iX - iWidth / 2, iY - iHeight / 2, iWidth, iHeight,
-            50, "center", "#ffffff", FONT, 1, 
-            2, 2,
+            50, "center", "#ffffff", FONT, 1,2, 2,
             "", 
             true, true, false,
             false);
     };
-
 
     this._initTimerDisplay = function() {
         _oTimerText = new createjs.Text("", "24px " + FONT, "#ffffff");
@@ -407,10 +364,6 @@ function CInterface(iScore){
         _oButMovementRight.unload();
         _oButMovementDown.unload();
         _oButMovementLeft.unload();
-        _oButMovementUp1.unload();
-        _oButMovementRight1.unload();
-        _oButMovementDown1.unload();
-        _oButMovementLeft1.unload();
 
         _oButTimer.unload();
         _oButExit.unload();
@@ -433,25 +386,15 @@ function CInterface(iScore){
         _oButTimer.setPosition((_pStartPosAudio.x)-100 - iNewX,iNewY + _pStartPosAudio.y);
 
         if (s_bMobile) {
-            var fSpaceBetweenButtons = 30;
-            _oButMovementUp.setPosition(_pStartPosButtonUp.x - iNewX, _pStartPosButtonUp.y - iNewY + _oButMovementUp.height / 2 + fSpaceBetweenButtons);
-            _oButMovementRight.setPosition(_pStartPosButtonRight.x - iNewX - _oButMovementRight.width / 2 - fSpaceBetweenButtons, _pStartPosButtonRight.y - iNewY + _oButMovementRight.height / 2);
-            _oButMovementDown.setPosition(_pStartPosButtonDown.x - iNewX, _pStartPosButtonDown.y - iNewY - _oButMovementDown.height / 2 - fSpaceBetweenButtons);
-            _oButMovementLeft.setPosition(_pStartPosButtonLeft.x - iNewX + _oButMovementLeft.width / 2 + fSpaceBetweenButtons, _pStartPosButtonLeft.y - iNewY + _oButMovementLeft.height / 2);
-            _oButMovementUp1.setPosition(_pStartPosButtonUp1.x + iNewX, _pStartPosButtonUp1.y - iNewY + _oButMovementUp1.height / 2 + fSpaceBetweenButtons);
-            _oButMovementRight1.setPosition(_pStartPosButtonRight1.x + iNewX - _oButMovementRight1.width / 2 - fSpaceBetweenButtons, _pStartPosButtonRight1.y - iNewY + _oButMovementRight1.height / 2);
-            _oButMovementDown1.setPosition(_pStartPosButtonDown1.x + iNewX, _pStartPosButtonDown1.y - iNewY - _oButMovementDown1.height / 2 - fSpaceBetweenButtons);
-            _oButMovementLeft1.setPosition(_pStartPosButtonLeft1.x + iNewX + _oButMovementLeft1.width / 2 + fSpaceBetweenButtons, _pStartPosButtonLeft1.y - iNewY + _oButMovementLeft1.height / 2);
+            _oButMovementUp.setPosition(_pStartPosButtonUp.x, _pStartPosButtonUp.y);
+            _oButMovementRight.setPosition(_pStartPosButtonRight.x, _pStartPosButtonRight.y);
+            _oButMovementDown.setPosition(_pStartPosButtonDown.x, _pStartPosButtonDown.y);
+            _oButMovementLeft.setPosition(_pStartPosButtonLeft.x, _pStartPosButtonLeft.y);
         } else {
             _oButMovementUp.setPosition(_pStartPosButtonUp.x - iNewX, _pStartPosButtonUp.y - iNewY);
             _oButMovementRight.setPosition(_pStartPosButtonRight.x - iNewX, _pStartPosButtonRight.y - iNewY);
             _oButMovementDown.setPosition(_pStartPosButtonDown.x - iNewX, _pStartPosButtonDown.y - iNewY);
             _oButMovementLeft.setPosition(_pStartPosButtonLeft.x - iNewX, _pStartPosButtonLeft.y - iNewY);
-
-            _oButMovementUp1.setPosition(_pStartPosButtonUp1.x + iNewX, _pStartPosButtonUp1.y - iNewY);
-            _oButMovementRight1.setPosition(_pStartPosButtonRight1.x + iNewX, _pStartPosButtonRight1.y - iNewY);
-            _oButMovementDown1.setPosition(_pStartPosButtonDown1.x + iNewX, _pStartPosButtonDown1.y - iNewY);
-            _oButMovementLeft1.setPosition(_pStartPosButtonLeft1.x + iNewX, _pStartPosButtonLeft1.y - iNewY);
         }
     };
     
@@ -488,13 +431,10 @@ function CInterface(iScore){
         _oMathOperationText.refreshText(text);
     };
 
-
-
     this.updateTimer = function(time) {
         _oTimerLevelNumStroke.refreshText(time);
         _oTimerLevelNum.refreshText(time);
     };
-
 
     this._onTimer = function(){
         s_oGame.onPause();
@@ -520,33 +460,32 @@ function CInterface(iScore){
         Howler.mute(s_bAudioActive);
         s_bAudioActive = !s_bAudioActive;
     };
+
     this._onExit = function(){
         s_oGame.onExit();    
-      };
+    };
       
-      this.resetFullscreenBut = function(){
-          if (_fRequestFullScreen && screenfull.isEnabled){
-              _oButFullscreen.setActive(s_bFullscreen);
-          }
-      };
-  
-  
-      this._onFullscreenRelease = function(){
-          if(s_bFullscreen) { 
-              _fCancelFullScreen.call(window.document);
-          }else{
-              _fRequestFullScreen.call(window.document.documentElement);
-          }
-          
-          sizeHandler();
-      };
-      
-      
-      s_oInterface = this;
-      
-      this._init(iScore);
-      
-      return this;
-  }
-  
-  var s_oInterface = null;
+    this.resetFullscreenBut = function(){
+        if (_fRequestFullScreen && screenfull.isEnabled){
+            _oButFullscreen.setActive(s_bFullscreen);
+        }
+    };
+
+    this._onFullscreenRelease = function(){
+        if(s_bFullscreen) { 
+            _fCancelFullScreen.call(window.document);
+        }else{
+            _fRequestFullScreen.call(window.document.documentElement);
+        }
+        
+        sizeHandler();
+    };
+    
+    s_oInterface = this;
+    
+    this._init(iScore);
+    
+    return this;
+}
+
+var s_oInterface = null;
